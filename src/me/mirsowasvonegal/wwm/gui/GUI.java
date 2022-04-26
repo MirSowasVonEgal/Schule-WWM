@@ -26,6 +26,8 @@ public class GUI {
     private void importGUIs() {
         jPanel.add(new MenuGUI(), "menu");
         jPanel.add(new GameGUI(), "game");
+        jPanel.add(new ResultGUI(true), "won");
+        jPanel.add(new ResultGUI(false), "lose");
     }
 
     public void open(String gui) {

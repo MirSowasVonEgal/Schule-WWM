@@ -1,6 +1,7 @@
 package me.mirsowasvonegal.wwm.gui;
 
 import me.mirsowasvonegal.wwm.Main;
+import me.mirsowasvonegal.wwm.models.Answer;
 import me.mirsowasvonegal.wwm.models.Game;
 import me.mirsowasvonegal.wwm.models.Question;
 
@@ -16,6 +17,12 @@ import java.awt.event.ActionEvent;
 public class GameGUI extends JPanel {
 
 	Game game;
+	Question question;
+	JLabel q;
+	JButton a1;
+	JButton a2;
+	JButton a3;
+	JButton a4;
 
 	/**
 	 * Create the panel.
@@ -23,58 +30,96 @@ public class GameGUI extends JPanel {
 	public GameGUI() {
 		game = Main.getGame();
 
-		Question question = game.getRandomQuestion();
-
 		setLayout(null);
-		
-		JLabel lblNewLabel_1_1 = new JLabel("Loading...");
-		lblNewLabel_1_1.setBounds(16, 6, 696, 124);
-		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 31));
-		add(lblNewLabel_1_1);
-		
-		JButton btnSpielBeenden_1_1_1_1 = new JButton("Loading...");
-		btnSpielBeenden_1_1_1_1.addActionListener(new ActionListener() {
+
+		q = new JLabel("Loading...");
+		q.setBounds(16, 6, 696, 124);
+		q.setHorizontalAlignment(SwingConstants.CENTER);
+		q.setFont(new Font("Tahoma", Font.PLAIN, 31));
+		add(q);
+
+		a1 = new JButton("Loading...");
+		a1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				answerQuestion(a1);
 			}
 		});
-		btnSpielBeenden_1_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 26));
-		btnSpielBeenden_1_1_1_1.setBounds(16, 141, 340, 121);
-		add(btnSpielBeenden_1_1_1_1);
+		a1.setFont(new Font("Tahoma", Font.BOLD, 26));
+		a1.setBounds(16, 141, 340, 121);
+		add(a1);
 		
-		JButton btnSpielBeenden_1_1_1_1_1 = new JButton("Loading...");
-		btnSpielBeenden_1_1_1_1_1.addActionListener(new ActionListener() {
+		a2 = new JButton("Loading...");
+		a2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				answerQuestion(a2);
 			}
 		});
-		btnSpielBeenden_1_1_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 26));
-		btnSpielBeenden_1_1_1_1_1.setBounds(366, 141, 340, 121);
-		add(btnSpielBeenden_1_1_1_1_1);
+		a2.setFont(new Font("Tahoma", Font.BOLD, 26));
+		a2.setBounds(366, 141, 340, 121);
+		add(a2);
 		
-		JButton btnSpielBeenden_1_1_1_1_2 = new JButton("Loading...");
-		btnSpielBeenden_1_1_1_1_2.addActionListener(new ActionListener() {
+		a3 = new JButton("Loading...");
+		a3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				answerQuestion(a3);
 			}
 		});
-		btnSpielBeenden_1_1_1_1_2.setFont(new Font("Tahoma", Font.BOLD, 26));
-		btnSpielBeenden_1_1_1_1_2.setBounds(16, 273, 340, 121);
-		add(btnSpielBeenden_1_1_1_1_2);
+		a3.setFont(new Font("Tahoma", Font.BOLD, 26));
+		a3.setBounds(16, 273, 340, 121);
+		add(a3);
 		
-		JButton btnSpielBeenden_1_1_1_1_3 = new JButton("Loading...");
-		btnSpielBeenden_1_1_1_1_3.addActionListener(new ActionListener() {
+		a4 = new JButton("Loading...");
+		a4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				answerQuestion(a4);
 			}
 		});
-		btnSpielBeenden_1_1_1_1_3.setFont(new Font("Tahoma", Font.BOLD, 26));
-		btnSpielBeenden_1_1_1_1_3.setBounds(366, 273, 340, 121);
-		add(btnSpielBeenden_1_1_1_1_3);
+		a4.setFont(new Font("Tahoma", Font.BOLD, 26));
+		a4.setBounds(366, 273, 340, 121);
+		add(a4);
 		
-		JLabel lblNewLabel = new JLabel("Geld: 0\u20AC");
+		JLabel lblNewLabel = new JLabel("Geld: 0€");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		lblNewLabel.setBounds(26, 405, 669, 46);
 		add(lblNewLabel);
 
+		generateQuestions();
 	}
+
+	public void generateQuestions() {
+		question = game.getRandomQuestion();
+		Answer[] answers = question.getAnswers();
+		q.setText(question.getQuestion());
+		a1.setText(answers[0].getAnswer());
+		a2.setText(answers[1].getAnswer());
+		a3.setText(answers[2].getAnswer());
+		a4.setText(answers[3].getAnswer());
+	}
+
+	public void answerQuestion(JButton button) {
+		for (Answer answer : question.getAnswers()) {
+			if(answer.getAnswer().equals(button.getText())) {
+				if(answer.getCorrect()) {
+					Main.getGui().open("won");
+
+					new Thread(() -> {
+						try {
+							Thread.sleep(1000*3);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						generateQuestions();
+						Main.getGui().open("game");
+					}).start();
+					return;
+				}
+				Main.getGui().open("lose");
+				return;
+			}
+		}
+	}
+
+
 
 }

@@ -11,13 +11,19 @@ import java.util.HashMap;
 public class Main {
 
     private static Game game;
+    private static GUI gui;
 
     public static Game getGame() {
         return game;
     }
 
+    public static GUI getGui() {
+        return gui;
+    }
+
     public static void main(String[] args) {
         game = new Game();
+        gui = new GUI();
     }
 
 }

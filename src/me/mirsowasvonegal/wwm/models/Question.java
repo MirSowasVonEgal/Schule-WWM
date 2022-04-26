@@ -7,6 +7,10 @@ public class Question {
     private String question;
     private Answer[] answers;
 
+    public Answer[] getAnswers() {
+        return answers;
+    }
+
     public String getQuestion() {
         return question;
     }

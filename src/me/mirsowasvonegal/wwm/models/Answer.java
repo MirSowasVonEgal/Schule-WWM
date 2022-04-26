@@ -23,7 +23,7 @@ public class Answer {
 
     public Answer(String answer) {
         this.answer = answer;
-        this.correct = true;
+        this.correct = false;
     }
 
     public Answer(String answer, Boolean correct) {

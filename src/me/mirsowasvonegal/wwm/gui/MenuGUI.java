@@ -19,14 +19,14 @@ public class MenuGUI extends JPanel {
 	public MenuGUI() {
 		setLayout(null);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("Wer wird Million\u00E4r?");
+		JLabel lblNewLabel_1_1 = new JLabel("Wer wird Millionär?");
 		lblNewLabel_1_1.setBounds(16, 6, 696, 57);
 		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 31));
 		add(lblNewLabel_1_1);
 		
 		JButton btnNewButton_1_1 = new JButton("Spiel starten");
-		btnNewButton_1_1.addActionListener(e -> Main.getGUI().open("game"));
+		btnNewButton_1_1.addActionListener(e -> Main.getGui().open("game"));
 		btnNewButton_1_1.setBounds(34, 353, 253, 72);
 		btnNewButton_1_1.setFont(new Font("Tahoma", Font.BOLD, 26));
 		add(btnNewButton_1_1);
